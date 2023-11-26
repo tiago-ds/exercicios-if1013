@@ -4,35 +4,59 @@ var o2x = require("object-to-xml");
 const port = "8585";
 
 function randomInt(low, high) {
-  return Math.floor(Math.random() * (high - low) + low);
+    return Math.floor(Math.random() * (high - low) + low);
+}
+
+function toFahrenheit(temperature) {
+    return (temperature * 9 / 5) + 32;
+}
+
+function params(url) {
+    let params = url.split("?") || [];
+    let result = {};
+    if (params.length >= 2) {
+        params[1].split("&").forEach((item) => {
+            result[item.split("=")[0]] = item.split("=")[1];
+        });
+    }
+    return result;
 }
 
 console.log("Server started!");
 http
-  .createServer(function (req, res) {
-    console.log("New incoming client request for " + req.url);
+    .createServer(function (req, res) {
+        const path = req.url.split("?")[0] || req.url;
+        const paramsMap = params(req.url);
 
-    const format = req.headers["accept"] || "application/json";
+        console.log("New incoming client request for " + path);
 
-    res.writeHeader(200, { "Content-Type": format });
+        const format = req.headers["accept"] || "application/json";
 
-    let data = undefined;
+        res.writeHeader(200, { "Content-Type": format });
+        
+        let data = undefined;
+        
+        switch (path) {
+            case "/temperature":
+                let temperature = randomInt(1, 40);
 
-    switch (req.url) {
-      case "/temperature":
-        data = { temperature: randomInt(1, 40) };
-        break;
+                if(paramsMap.scale == "F") {
+                    temperature = toFahrenheit(temperature);
+                }
 
-      case "/light":
-        data = { light: randomInt(1, 100) };
-        break;
+                data = { temperature };
+                break;
 
-      default:
-        data = { hello: "world" };
-    }
+            case "/light":
+                data = { light: randomInt(1, 100) };
+                break;
 
-    res.write(format.includes("xml") ? o2x(data) : JSON.stringify(data));
+            default:
+                data = { hello: "world" };
+        }
 
-    res.end();
-  })
-  .listen(port);
+        res.write(format.includes("xml") ? o2x(data) : JSON.stringify(data));
+
+        res.end();
+    })
+    .listen(port);
