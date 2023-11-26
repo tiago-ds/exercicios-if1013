@@ -34,7 +34,7 @@ http
 
         res.writeHeader(200, { "Content-Type": format });
         
-        let data = undefined;
+        let data = {};
         
         switch (path) {
             case "/temperature":
