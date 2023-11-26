@@ -30,7 +30,7 @@ http
 
         console.log("New incoming client request for " + path);
 
-        const format = req.headers["accept"] || "application/json";
+        const format = req.headers["accept"]?.includes("xml") ? "application/xml" : "application/json";
 
         res.writeHeader(200, { "Content-Type": format });
         
@@ -39,12 +39,13 @@ http
         switch (path) {
             case "/temperature":
                 let temperature = randomInt(1, 40);
+                let scale = paramsMap.scale || "C";
 
-                if(paramsMap.scale == "F") {
+                if(scale == "F") {
                     temperature = toFahrenheit(temperature);
                 }
 
-                data = { temperature };
+                data = { temperature, scale };
                 break;
 
             case "/light":
@@ -55,7 +56,7 @@ http
                 data = { hello: "world" };
         }
 
-        res.write(format.includes("xml") ? o2x(data) : JSON.stringify(data));
+        res.write(format === ("application/xml") ? o2x(data) : JSON.stringify(data));
 
         res.end();
     })
