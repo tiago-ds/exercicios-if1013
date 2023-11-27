@@ -1,5 +1,6 @@
 var http = require("http");
 var o2x = require("object-to-xml");
+var wotService = require("./wot-service");
 
 const port = "8585";
 
@@ -22,9 +23,18 @@ function params(url) {
     return result;
 }
 
+async function getTemperatureFromService() {
+    try {
+        const response = await wotService.getTemperature();
+        return response;
+    } catch(e) {
+        console.log(e);
+    } 
+}
+
 console.log("Server started!");
 http
-    .createServer(function (req, res) {
+    .createServer(async function (req, res) {
         const path = req.url.split("?")[0] || req.url;
         const paramsMap = params(req.url);
 
@@ -38,14 +48,15 @@ http
         
         switch (path) {
             case "/temperature":
-                let temperature = randomInt(1, 40);
+                let  { value } = await getTemperatureFromService();
+
                 let scale = paramsMap.scale || "C";
 
                 if(scale == "F") {
                     temperature = toFahrenheit(temperature);
                 }
 
-                data = { temperature, scale };
+                data = { temperature: value, scale };
                 break;
 
             case "/light":
@@ -60,4 +71,4 @@ http
 
         res.end();
     })
-    .listen(port);
+.listen(port);
