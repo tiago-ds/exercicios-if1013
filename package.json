@@ -11,7 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "object-to-xml": "^2.0.0"
+    "object-to-xml": "^2.0.0",
+    "ws": "^8.15.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
