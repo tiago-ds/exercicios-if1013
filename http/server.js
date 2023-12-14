@@ -23,6 +23,10 @@ function params(url) {
     return result;
 }
 
+function randomIntSSE(low, high) {
+    return Math.floor(Math.random() * (high - low) + low);
+}
+
 async function getTemperatureFromService() {
     try {
         const response = await wotService.getTemperature();
@@ -39,8 +43,23 @@ http
         const paramsMap = params(req.url);
 
         console.log("New incoming client request for " + path);
+        
+        const acceptHeader = req.headers["accept"];
+        
+        if(acceptHeader?.includes("text/event-stream")) {
+            res.writeHeader(200, {
+                "Content-Type": "text/event-stream"
+                , "Cache-Control": "no-cache"
+                , "Connection": "keep-alive"
+                , "Access-Control-Allow-Origin": "*"
+            });
+            var interval = setInterval(function () {
+                res.write("data: " + randomInt(100, 127) + "\n\n");
+            }, 2000);
+            return;
+        }
 
-        const format = req.headers["accept"]?.includes("xml") ? "application/xml" : "application/json";
+        const format = acceptHeader?.includes("xml") ? "application/xml" : "application/json";
 
         res.writeHeader(200, { "Content-Type": format });
         

@@ -1,4 +1,5 @@
 var http = require("http");
+
 http.createServer(function (req, res) {
     res.writeHeader(200, {
         "Content-Type": "text/event-stream"
@@ -6,9 +7,11 @@ http.createServer(function (req, res) {
         , "Connection": "keep-alive"
         , "Access-Control-Allow-Origin": "*"
     });
+
     var interval = setInterval(function () {
         res.write("data: " + randomInt(100, 127) + "\n\n");
     }, 2000);
+    
 }).listen(9090);
 
 console.log('SSE-Server started!');

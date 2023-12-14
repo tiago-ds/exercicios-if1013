@@ -1,6 +1,6 @@
 <html>
   <script language="javascript">
-    var source = new EventSource("http://localhost:9090");
+    var source = new EventSource("http://localhost:8585");
     source.onmessage = function (event) {
       document.getElementById("result").innerHTML =
         "<h3>Voltagem medida: " + event.data + "</h3>";
