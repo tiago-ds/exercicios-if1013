@@ -82,10 +82,10 @@ http
                 let scale = paramsMap.scale || "C";
 
                 if(scale == "F") {
-                    temperature = toFahrenheit(temperature);
+                    temperature = toFahrenheit(value);
                 }
 
-                data = { temperature: value, scale };
+                data = { temperature, scale };
                 break;
 
             case "/light":
