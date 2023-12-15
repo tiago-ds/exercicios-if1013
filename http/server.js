@@ -47,14 +47,24 @@ http
         const acceptHeader = req.headers["accept"];
         
         if(acceptHeader?.includes("text/event-stream")) {
+            
+            let scale = req.headers["scale"] || "C";
+
             res.writeHeader(200, {
                 "Content-Type": "text/event-stream"
                 , "Cache-Control": "no-cache"
                 , "Connection": "keep-alive"
                 , "Access-Control-Allow-Origin": "*"
             });
-            var interval = setInterval(function () {
-                res.write("data: " + randomInt(100, 127) + "\n\n");
+            
+            setInterval(async function () {
+                let  { value } = await getTemperatureFromService();
+
+                if(scale == "F") {
+                    value = toFahrenheit(value);
+                }
+
+                res.write("data: " + value + scale +"\n\n");
             }, 2000);
             return;
         }
