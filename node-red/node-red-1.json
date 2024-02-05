@@ -1,0 +1,512 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Exercício 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e9ad5c46ea3acbe5",
+        "type": "tab",
+        "label": "Exercício 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "567442efe5976275",
+        "type": "tab",
+        "label": "Exercício 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f04586d614de6444",
+        "type": "tab",
+        "label": "Exercício 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4362cef1f6ae3a19",
+        "type": "tab",
+        "label": "Fluxo 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f5221bf941d7f6bf",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "https://test.mosquitto.org/",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "30",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "d416014842562d43",
+        "type": "websocket-listener",
+        "path": "/mosquitto",
+        "wholemsg": "false"
+    },
+    {
+        "id": "9a952cfa7a1f07f6",
+        "type": "websocket-listener",
+        "path": "/voltage",
+        "wholemsg": "false"
+    },
+    {
+        "id": "2f6ca8f819eb097a",
+        "type": "websocket-client",
+        "path": "ws://localhost:8081/voltage",
+        "tls": "",
+        "wholemsg": "false",
+        "hb": "0",
+        "subprotocol": ""
+    },
+    {
+        "id": "0b358abc940043f1",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "edcb39c8decca789",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Parse content",
+        "func": "var obj = { temperature: msg.payload};\nreturn { payload: obj };",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [
+                "0b358abc940043f1"
+            ]
+        ]
+    },
+    {
+        "id": "d1e3fef373f19df9",
+        "type": "websocket in",
+        "z": "f6f2187d.f17ca8",
+        "name": "Voltage",
+        "server": "",
+        "client": "2f6ca8f819eb097a",
+        "x": 90,
+        "y": 160,
+        "wires": [
+            [
+                "edcb39c8decca789"
+            ]
+        ]
+    },
+    {
+        "id": "b62dd555e3c72073",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "Exercicio 1",
+        "info": "",
+        "x": 100,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "fa70437b1006dc70",
+        "type": "mqtt out",
+        "z": "e9ad5c46ea3acbe5",
+        "name": "",
+        "topic": "mqtt",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f5221bf941d7f6bf",
+        "x": 370,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e30e80fe5acc48f2",
+        "type": "inject",
+        "z": "e9ad5c46ea3acbe5",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Hey MQTT",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "fa70437b1006dc70"
+            ]
+        ]
+    },
+    {
+        "id": "529605bb4d781921",
+        "type": "comment",
+        "z": "e9ad5c46ea3acbe5",
+        "name": "Exercicio 2",
+        "info": "",
+        "x": 60,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "4c7bd9ad07e111da",
+        "type": "mqtt in",
+        "z": "567442efe5976275",
+        "name": "",
+        "topic": "test",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "f5221bf941d7f6bf",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "394951fbf516a071"
+            ]
+        ]
+    },
+    {
+        "id": "394951fbf516a071",
+        "type": "function",
+        "z": "567442efe5976275",
+        "name": "Parse content",
+        "func": "var obj = { mosquittoValue: msg.payload.value};\nreturn { payload: obj };",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 140,
+        "wires": [
+            [
+                "e883b005ec7d031c",
+                "4a7e7fe0f2d8de6d"
+            ]
+        ]
+    },
+    {
+        "id": "4a7e7fe0f2d8de6d",
+        "type": "debug",
+        "z": "567442efe5976275",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e883b005ec7d031c",
+        "type": "websocket out",
+        "z": "567442efe5976275",
+        "name": "Mosquitto WS",
+        "server": "d416014842562d43",
+        "client": "",
+        "x": 520,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "2793c38f9f46243e",
+        "type": "comment",
+        "z": "567442efe5976275",
+        "name": "Exercicio 3",
+        "info": "",
+        "x": 160,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "4038c6144deb105a",
+        "type": "comment",
+        "z": "f04586d614de6444",
+        "name": "Exercicio 4",
+        "info": "",
+        "x": 100,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "b3f4665b9afee997",
+        "type": "debug",
+        "z": "f04586d614de6444",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "85586333c61fa843",
+        "type": "http request",
+        "z": "f04586d614de6444",
+        "name": "Connection Request",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:8585",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 350,
+        "y": 180,
+        "wires": [
+            [
+                "745cd570310866f2"
+            ]
+        ]
+    },
+    {
+        "id": "c550fd576437cee0",
+        "type": "inject",
+        "z": "f04586d614de6444",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "85586333c61fa843"
+            ]
+        ]
+    },
+    {
+        "id": "745cd570310866f2",
+        "type": "sse-client",
+        "z": "f04586d614de6444",
+        "name": "",
+        "url": "http://localhost:9090",
+        "events": [],
+        "headers": {},
+        "proxy": "",
+        "restart": false,
+        "rejectUnauthorized": true,
+        "withCredentials": true,
+        "timeout": 1,
+        "x": 570,
+        "y": 180,
+        "wires": [
+            [
+                "d8e7ce5bc9c319c7"
+            ]
+        ]
+    },
+    {
+        "id": "d8e7ce5bc9c319c7",
+        "type": "function",
+        "z": "f04586d614de6444",
+        "name": "Parse content",
+        "func": "var obj = { voltage: msg.payload.toString() };\nreturn { payload: obj };",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 180,
+        "wires": [
+            [
+                "b3f4665b9afee997"
+            ]
+        ]
+    },
+    {
+        "id": "3ae0c4881bb61c3e",
+        "type": "inject",
+        "z": "4362cef1f6ae3a19",
+        "name": "Random",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$random()\t",
+        "payloadType": "jsonata",
+        "x": 160,
+        "y": 220,
+        "wires": [
+            [
+                "09adccd04ba84e4e"
+            ]
+        ]
+    },
+    {
+        "id": "b97dddfaf16381a6",
+        "type": "debug",
+        "z": "4362cef1f6ae3a19",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "09adccd04ba84e4e",
+        "type": "switch",
+        "z": "4362cef1f6ae3a19",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0.5",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 310,
+        "y": 220,
+        "wires": [
+            [
+                "b97dddfaf16381a6",
+                "1e84d0ce52d90841"
+            ]
+        ]
+    },
+    {
+        "id": "1e84d0ce52d90841",
+        "type": "function",
+        "z": "4362cef1f6ae3a19",
+        "name": "Format Message",
+        "func": "var temperatura = msg.payload\n\nmsg.topic = \"Alerta de temperatura\"\n\nmsg.payload = \"Temperatura alcançou o valor de \" + temperatura\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e1f7ee8a904bb2f0",
+        "type": "comment",
+        "z": "4362cef1f6ae3a19",
+        "name": "Atividades Basicas",
+        "info": "",
+        "x": 170,
+        "y": 100,
+        "wires": []
+    }
+]
