@@ -1,0 +1,271 @@
+[
+    {
+        "id": "0be3e5c8f91386cf",
+        "type": "tab",
+        "label": "Simulando valores mais realistas",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2c4d2d43c81599e4",
+        "type": "inject",
+        "z": "0be3e5c8f91386cf",
+        "name": "Generate Random Number",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$round(($random() * 10) + 215)\t",
+        "payloadType": "jsonata",
+        "x": 330,
+        "y": 180,
+        "wires": [
+            [
+                "edf10ad52d4cd107",
+                "f5e7db67a09fa756",
+                "d34e2f68abc175b2",
+                "f46665ae6d0e98a2"
+            ]
+        ]
+    },
+    {
+        "id": "edf10ad52d4cd107",
+        "type": "debug",
+        "z": "0be3e5c8f91386cf",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "f5e7db67a09fa756",
+        "type": "ui_gauge",
+        "z": "0be3e5c8f91386cf",
+        "name": "",
+        "group": "a49fdee02611211f",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Voltage",
+        "label": "volts",
+        "format": "{{value}} v",
+        "min": "215",
+        "max": "225",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 620,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "d34e2f68abc175b2",
+        "type": "ui_chart",
+        "z": "0be3e5c8f91386cf",
+        "name": "Voltage Chart",
+        "group": "a49fdee02611211f",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Voltagem",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "mm:ss",
+        "interpolate": "linear",
+        "nodata": "Voltage",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "2",
+        "removeOlderPoints": "10",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1eb321",
+            "#1b4f93",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 640,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c2194d593e656879",
+        "type": "ui_audio",
+        "z": "0be3e5c8f91386cf",
+        "name": "",
+        "group": "a49fdee02611211f",
+        "voice": "Google 國語（臺灣）",
+        "always": "",
+        "x": 960,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "f46665ae6d0e98a2",
+        "type": "switch",
+        "z": "0be3e5c8f91386cf",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "220",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 260,
+        "wires": [
+            [
+                "68826dd167d5c782",
+                "5f3b511632c5fa1f"
+            ]
+        ]
+    },
+    {
+        "id": "68826dd167d5c782",
+        "type": "file in",
+        "z": "0be3e5c8f91386cf",
+        "name": "",
+        "filename": "sirene.mp3",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 790,
+        "y": 240,
+        "wires": [
+            [
+                "c2194d593e656879"
+            ]
+        ]
+    },
+    {
+        "id": "0fc85d716874e95c",
+        "type": "ui_button",
+        "z": "0be3e5c8f91386cf",
+        "name": "New Voltage",
+        "group": "a49fdee02611211f",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "New Voltage",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "purple",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 90,
+        "y": 260,
+        "wires": [
+            [
+                "ee5c5c7f6680ec6a"
+            ]
+        ]
+    },
+    {
+        "id": "ee5c5c7f6680ec6a",
+        "type": "function",
+        "z": "0be3e5c8f91386cf",
+        "name": "Generate random number",
+        "func": "\n\nreturn {payload: Math.round((Math.random() * 10) + 215)};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 260,
+        "wires": [
+            [
+                "edf10ad52d4cd107",
+                "f5e7db67a09fa756",
+                "d34e2f68abc175b2",
+                "f46665ae6d0e98a2"
+            ]
+        ]
+    },
+    {
+        "id": "5f3b511632c5fa1f",
+        "type": "debug",
+        "z": "0be3e5c8f91386cf",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"alert\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "a49fdee02611211f",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "dcb021799c07a2c2",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dcb021799c07a2c2",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
